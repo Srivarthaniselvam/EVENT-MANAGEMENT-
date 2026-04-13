@@ -1,0 +1,71 @@
+@Metadata.layer: #CUSTOMER
+@UI: {
+  headerInfo: { typeName: 'Event', 
+                typeNamePlural: 'Events', 
+                title: { type: #STANDARD, value: 'EventName' } }
+}
+annotate view ZCIT_EVENT_C_303 with 
+{
+  @UI.facet: [
+    { id: 'EventHeader', type: #COLLECTION, label: 'Event Overview', position: 10 },
+    
+    { id: 'BasicInfo', 
+      parentId: 'EventHeader', 
+      type: #IDENTIFICATION_REFERENCE, 
+      label: 'General Info', 
+      position: 10 },
+      
+    { id: 'AdminInfo', 
+      parentId: 'EventHeader', 
+      type: #FIELDGROUP_REFERENCE, 
+      label: 'Admin Details', 
+      targetQualifier: 'Admin', 
+      position: 20 },
+      
+    { id: 'Participants', 
+      type: #LINEITEM_REFERENCE, 
+      label: 'Attendees/Participants', 
+      position: 20, 
+      targetElement: '_Participants' }
+  ]
+
+  @UI: { lineItem:       [{ position: 10 }],
+         identification: [{ position: 10, label: 'Event ID' }] }
+  EventId;
+
+  @UI: { lineItem:       [{ position: 20 }],
+         identification: [{ position: 20, label: 'Event Name' }],
+         selectionField: [{ position: 10 }] }
+  @Search.defaultSearchElement: true  // Enables search bar for names
+  EventName;
+
+  @UI: { lineItem:       [{ position: 30, criticality: 'TypeCriticality' }],
+         identification: [{ position: 30, label: 'Event Type', criticality: 'TypeCriticality' }],
+         selectionField: [{ position: 20 }] }
+  // FIX: Dropdown logic (Ensure this matches your Value Help View or Domain)
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'I_Currency', element: 'Currency' } }] // Placeholder for dropdown
+  EventType;
+
+  @UI: { lineItem:       [{ position: 40 }],
+         identification: [{ position: 40, label: 'Event Date' }] }
+  EventDate;
+
+  @UI: { lineItem:       [{ position: 50, criticality: 'StatusCriticality' }],
+         identification: [{ position: 50, label: 'Status', criticality: 'StatusCriticality' }],
+         selectionField: [{ position: 30 }] }
+  Status;
+
+  @UI: { lineItem:       [{ position: 60 }],
+         identification: [{ position: 60, label: 'Total Revenue' }] }
+  TotalRevenue;
+
+  /* Admin Group - Fix naming to match Projection View exactly */
+  
+  @EndUserText.label: 'Last Changed At'
+  @UI.fieldGroup: [{ qualifier: 'Admin', position: 10 }]
+  Locallastchangedat;
+  
+  @EndUserText.label: 'Last Changed By'
+  @UI.fieldGroup: [{ qualifier: 'Admin', position: 20 }]
+  locallastchangedby; // Changed from 'locallastchangedby' to match case
+}

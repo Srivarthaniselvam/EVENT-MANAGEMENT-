@@ -1,0 +1,5 @@
+@EndUserText.label: 'SERVICE'
+define service ZCIT_EVENT_SE_303 {
+  expose ZCIT_EVENT_C_303;
+  expose ZCIT_PARTY_C_303;
+}

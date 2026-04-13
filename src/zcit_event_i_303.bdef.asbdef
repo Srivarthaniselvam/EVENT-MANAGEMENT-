@@ -1,0 +1,72 @@
+unmanaged implementation in class zbp_cit_event_i_303 unique;
+strict ( 2 );
+with draft;
+
+define behavior for ZCIT_EVENT_I_303 alias Event
+draft table zcit_event_d_303
+lock master
+total etag Lastchangedat
+authorization master ( instance )
+etag master Locallastchangedat
+{
+  create (authorization : global);
+  update;
+  delete;
+
+  association _Participants { create; with draft; }
+
+  field ( readonly ) EventId;
+  field ( readonly ) Localcreatedat, Localcreatedby, Locallastchangedat,  Lastchangedat;
+
+  // Added Mapping for Header Table
+  mapping for zcit_event_303
+  {
+    EventId            = event_id;
+    EventName          = event_name;
+    EventType          = event_type;
+    EventDate          = event_date;
+    Location           = location;
+    Status             = status;
+    MaxAttendees       = max_attendees;
+    TotalRevenue       = total_revenue;
+    CurrencyCode       = currency_code;
+    Localcreatedby     = localcreatedby;
+    Localcreatedat     = localcreatedat;
+    Locallastchangedby = locallastchangedby;
+    Locallastchangedat = locallastchangedat;
+    Lastchangedat      = lastchangedat;
+  }
+
+  draft action Edit;
+  draft action Activate;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+}
+
+define behavior for ZCIT_PARTY_I_303 alias Participant
+draft table zcit_party_d_303
+lock dependent by _Event
+authorization dependent by _Event
+etag master EventId
+{
+  update;
+  delete;
+
+  field ( readonly ) EventId, PartId;
+  association _Event { with draft; }
+
+  // Added Mapping for Item Table
+  mapping for zcit_party_303
+  {
+    EventId      = event_id;
+    PartId       = part_id;
+    FirstName    = first_name;
+    LastName     = last_name;
+    Email        = email;
+    TicketType   = ticket_type;
+    RegDate      = reg_date;
+    AmountPaid   = amount_paid;
+    CurrencyCode = currency_code;
+  }
+}

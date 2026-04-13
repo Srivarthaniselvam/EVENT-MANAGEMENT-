@@ -1,0 +1,36 @@
+@Metadata.layer: #CUSTOMER
+@UI: {
+  headerInfo: { typeName: 'Participant', 
+                typeNamePlural: 'Participants', 
+                title: { type: #STANDARD, value: 'LastName' } }
+}
+annotate view ZCIT_PARTY_C_303 with 
+{
+  @UI.facet: [
+    { id: 'ParticipantInfo', type: #IDENTIFICATION_REFERENCE, label: 'Attendee Details', position: 10 }
+  ]
+
+  @UI: { lineItem:       [{ position: 10 }],
+         identification: [{ position: 10, label: 'ID' }] }
+  PartId;
+
+  @UI: { lineItem:       [{ position: 20 }],
+         identification: [{ position: 20, label: 'First Name' }] }
+  FirstName;
+
+  @UI: { lineItem:       [{ position: 30 }],
+         identification: [{ position: 30, label: 'Last Name' }] }
+  LastName;
+
+  @UI: { lineItem:       [{ position: 40 }],
+         identification: [{ position: 40, label: 'Email' }] }
+  Email;
+
+  @UI: { lineItem:       [{ position: 50 }],
+         identification: [{ position: 50, label: 'Ticket Type' }] }
+  TicketType;
+
+  @UI: { lineItem:       [{ position: 60 }],
+         identification: [{ position: 60, label: 'Amount Paid' }] }
+  AmountPaid;
+}

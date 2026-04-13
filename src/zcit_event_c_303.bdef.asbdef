@@ -1,0 +1,26 @@
+projection;
+strict ( 2 );
+use draft;
+
+define behavior for ZCIT_EVENT_C_303 alias Event
+{
+  use create;
+  use update;
+  use delete;
+
+  use action Edit;
+  use action Activate;
+  use action Discard;
+  use action Resume;
+  use action Prepare;
+
+  use association _Participants { create; with draft; }
+}
+
+define behavior for ZCIT_PARTY_C_303 alias Participant
+{
+  use update;
+  use delete;
+
+  use association _Event { with draft; }
+}
